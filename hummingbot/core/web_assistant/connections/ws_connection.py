@@ -18,6 +18,7 @@ class WSConnection:
         self._connected = False
         self._message_timeout: Optional[float] = None
         self._last_recv_time = 0
+        self._proxy_url = "http://127.0.0.1:7890"
 
     @property
     def last_recv_time(self) -> float:
@@ -42,6 +43,7 @@ class WSConnection:
             autoping=False,
             heartbeat=ping_timeout,
             max_msg_size=max_msg_size,
+            proxy=self._proxy_url,
         )
         self._message_timeout = message_timeout
         self._connected = True

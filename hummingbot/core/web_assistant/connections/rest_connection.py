@@ -5,6 +5,7 @@ from hummingbot.core.web_assistant.connections.data_types import RESTRequest, RE
 class RESTConnection:
     def __init__(self, aiohttp_client_session: aiohttp.ClientSession):
         self._client_session = aiohttp_client_session
+        self._proxy_url = "http://127.0.0.1:7890"
 
     async def call(self, request: RESTRequest) -> RESTResponse:
         aiohttp_resp = await self._client_session.request(
@@ -13,6 +14,7 @@ class RESTConnection:
             params=request.params,
             data=request.data,
             headers=request.headers,
+            proxy=self._proxy_url,
         )
 
         resp = await self._build_resp(aiohttp_resp)
